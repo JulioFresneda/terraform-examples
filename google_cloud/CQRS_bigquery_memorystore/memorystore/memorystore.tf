@@ -5,4 +5,5 @@ resource "google_redis_instance" "cache" {
   location_id             = "${var.config.region}-c"
   tier                    = "BASIC"
   authorized_network      = var.config.network
+  auth_enabled = true
 }
