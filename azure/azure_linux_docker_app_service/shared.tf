@@ -23,9 +23,12 @@ resource "azurerm_key_vault" "current" {
 
   soft_delete_enabled        = true
   soft_delete_retention_days = 7
-  purge_protection_enabled   = false
+  purge_protection_enabled   = true
 
   sku_name = "standard"
+  network_acls {
+    default_action = "Deny"
+  }
 }
 
 resource "azurerm_container_registry" "current" {
@@ -36,6 +39,7 @@ resource "azurerm_container_registry" "current" {
 
   # We'll be using AD login
   admin_enabled = false
+  public_network_access_enabled = false
 }
 
 resource "azurerm_application_insights" "current" {

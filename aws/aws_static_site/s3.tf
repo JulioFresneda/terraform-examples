@@ -24,6 +24,28 @@ resource "aws_s3_bucket" "this" {
   }
 }
 
+
+resource "aws_s3_bucket" "this_log_bucket" {
+  bucket = "this-log-bucket"
+}
+
+resource "aws_s3_bucket_logging" "this" {
+  bucket = aws_s3_bucket.this.id
+
+  target_bucket = aws_s3_bucket.this_log_bucket.id
+  target_prefix = "log/"
+}
+
+
+
+resource "aws_s3_bucket_versioning" "this" {
+  bucket = aws_s3_bucket.this.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 # Use a bucket policy (instead of the simpler acl = "public-read") so we don't need to always remember to upload objects with:
 # $ aws s3 cp --acl public-read ...
 # https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl

@@ -127,7 +127,6 @@ resource "google_pubsub_topic" "httpwal" {
 # grant Cloud Pub/Sub the permission to create tokens for authenticating the subscription
 resource "google_project_iam_member" "pubsub_token_creator" {
   project = local.project
-  role    = "roles/iam.serviceAccountTokenCreator"
   member  = "serviceAccount:service-${local.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
